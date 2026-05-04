@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./App.css";
 
 type Todo = {
   id: string;
@@ -83,81 +84,96 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "900px", margin: "0 auto" }}>
-      <h1>Todo App</h1>
+    <main className="page">
+      <section className="card">
+        <header className="header">
+          <h1>Todo App</h1>
+          <p>Manage your tasks and deadlines</p>
+        </header>
 
-      <form onSubmit={handleAddTodo} style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter task"
-          style={{ padding: "8px", width: "60%", marginRight: "10px" }}
-        />
+        <form className="todo-form" onSubmit={handleAddTodo}>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter task (min. 11 characters)"
+          />
 
-        <input
-          type="date"
-          value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
-          style={{ padding: "8px", marginRight: "10px" }}
-        />
+          <div className="date-field">
+            <input
+              type="date"
+              value={deadline}
+              onChange={(e) => setDeadline(e.target.value)}
+              className="date-input"
+            />
+          </div>
 
-        <button type="submit">Add</button>
+          <button type="submit">Add</button>
+        </form>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </form>
+        {error && <p className="error">{error}</p>}
 
-      <table border={1} width="100%" cellPadding={10}>
-        <thead>
-          <tr>
-            <th>Task</th>
-            <th>Deadline</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <table className="todo-table">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Deadline</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {todos.map((todo) => {
-            const overdue = isOverdue(todo.deadline) && !todo.isDone;
-
-            return (
-              <tr
-                key={todo.id}
-                style={{
-                  color: overdue ? "red" : "black",
-                }}
-              >
-                <td
-                  style={{
-                    textDecoration: todo.isDone ? "line-through" : "none",
-                  }}
-                >
-                  {todo.title}
-                </td>
-                <td>
-                  {todo.deadline
-                    ? new Date(todo.deadline).toLocaleDateString()
-                    : "-"}
-                </td>
-                <td>{todo.isDone ? "Done" : overdue ? "Overdue" : "Pending"}</td>
-                <td>
-                  {!todo.isDone && (
-                    <button
-                      onClick={() => handleDone(todo.id)}
-                      style={{ marginRight: "5px" }}
-                    >
-                      Done
-                    </button>
-                  )}
-                  <button onClick={() => handleDelete(todo.id)}>Delete</button>
+          <tbody>
+            {todos.length === 0 && (
+              <tr>
+                <td colSpan={4} className="empty">
+                  No tasks yet.
                 </td>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+            )}
+
+            {todos.map((todo) => {
+              const overdue = isOverdue(todo.deadline) && !todo.isDone;
+
+              return (
+                <tr
+                  key={todo.id}
+                  className={`${overdue ? "overdue" : ""} ${todo.isDone ? "done-row" : ""
+                    }`}
+                >
+                  <td className={todo.isDone ? "done-title" : ""}>
+                    {todo.title}
+                  </td>
+                  <td>
+                    {todo.deadline
+                      ? new Date(todo.deadline).toLocaleDateString()
+                      : "-"}
+                  </td>
+                  <td>
+                    <span
+                      className={`badge ${todo.isDone ? "badge-done" : overdue ? "badge-overdue" : "badge-pending"
+                        }`}
+                    >
+                      {todo.isDone ? "Done" : overdue ? "Overdue" : "Pending"}
+                    </span>
+                  </td>
+                  <td className="actions">
+                    {!todo.isDone && (
+                      <button className="done-button" onClick={() => handleDone(todo.id)}>
+                        Done
+                      </button>
+                    )}
+                    <button className="delete-button" onClick={() => handleDelete(todo.id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </section>
+    </main>
   );
 }
 
