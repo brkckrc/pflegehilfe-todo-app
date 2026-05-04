@@ -28,7 +28,7 @@ Make sure the following tools are installed on your system:
 
 ## 🚀 Features
 
-- Create tasks (minimum 10 characters validation)
+- Create tasks (must be longer than 10 characters)
 - Optional deadline selection
 - Overdue tasks are highlighted in red
 - Mark tasks as done
@@ -113,3 +113,5 @@ http://localhost:5173
 This project was implemented with a focus on clean structure, simplicity, and fulfilling the given requirements.
 
 In a real-world scenario, additional features such as soft delete, logging, and advanced validation could be added.
+
+The application focuses on simplicity, correctness, and meeting all requirements without unnecessary complexity.
