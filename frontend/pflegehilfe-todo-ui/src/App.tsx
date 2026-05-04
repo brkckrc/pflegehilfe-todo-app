@@ -67,6 +67,10 @@ function App() {
   };
 
   const handleDelete = async (id: string) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this task?");
+
+    if (!confirmDelete) return;
+
     await fetch(`${API_URL}/${id}`, { method: "DELETE" });
     await loadTodos();
   };

@@ -17,6 +17,17 @@ public class TodosController : ControllerBase
         _context = context;
     }
 
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<TodoItem>> GetTodoById(Guid id)
+    {
+        var todo = await _context.Todos.FindAsync(id);
+
+        if (todo is null)
+            return NotFound();
+
+        return Ok(todo);
+    }
+
     [HttpGet]
     public async Task<ActionResult<List<TodoItem>>> GetTodos()
     {
@@ -47,7 +58,7 @@ public class TodosController : ControllerBase
         _context.Todos.Add(todo);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetTodos), new { id = todo.Id }, todo);
+        return CreatedAtAction(nameof(GetTodoById), new { id = todo.Id }, todo);
     }
 
     [HttpPut("{id:guid}/done")]
