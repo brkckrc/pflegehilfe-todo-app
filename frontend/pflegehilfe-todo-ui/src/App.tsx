@@ -17,8 +17,8 @@ function App() {
   const [error, setError] = useState("");
 
   const loadTodos = async () => {
-    const response = await fetch(API_URL);
-    const data = await response.json();
+    const res = await fetch(API_URL);
+    const data = await res.json();
     setTodos(data);
   };
 
@@ -26,8 +26,8 @@ function App() {
     loadTodos();
   }, []);
 
-  const handleAddTodo = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleAddTodo = async (e: React.FormEvent) => {
+    e.preventDefault();
     setError("");
 
     if (title.trim().length <= 10) {
@@ -35,26 +35,38 @@ function App() {
       return;
     }
 
-    const response = await fetch(API_URL, {
+    const res = await fetch(API_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: title.trim(),
         deadline: deadline || null,
       }),
     });
 
-    if (!response.ok) {
-      const message = await response.text();
-      setError(message || "Something went wrong.");
+    if (!res.ok) {
+      setError("Error creating task");
       return;
     }
 
     setTitle("");
     setDeadline("");
-    await loadTodos();
+    loadTodos();
+  };
+
+  const handleDone = async (id: string) => {
+    await fetch(`${API_URL}/${id}/done`, { method: "PUT" });
+    loadTodos();
+  };
+
+  const handleDelete = async (id: string) => {
+    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    loadTodos();
+  };
+
+  const isOverdue = (deadline?: string) => {
+    if (!deadline) return false;
+    return new Date(deadline) < new Date();
   };
 
   return (
@@ -62,45 +74,57 @@ function App() {
       <h1>Todo App</h1>
 
       <form onSubmit={handleAddTodo} style={{ marginBottom: "20px" }}>
-        <div style={{ marginBottom: "10px" }}>
-          <label>
-            Task
-            <br />
-            <input
-              type="text"
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
-              placeholder="Enter task title"
-              style={{ width: "100%", padding: "8px" }}
-            />
-          </label>
-        </div>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Enter task"
+          style={{ padding: "8px", width: "60%", marginRight: "10px" }}
+        />
 
-        <div style={{ marginBottom: "10px" }}>
-          <label>
-            Deadline
-            <br />
-            <input
-              type="date"
-              value={deadline}
-              onChange={(event) => setDeadline(event.target.value)}
-              style={{ padding: "8px" }}
-            />
-          </label>
-        </div>
+        <input
+          type="date"
+          value={deadline}
+          onChange={(e) => setDeadline(e.target.value)}
+          style={{ padding: "8px", marginRight: "10px" }}
+        />
+
+        <button type="submit">Add</button>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
-
-        <button type="submit">Add Task</button>
       </form>
 
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            {todo.title} - {todo.isDone ? "Done" : "Pending"}
-          </li>
-        ))}
-      </ul>
+      <table border={1} width="100%" cellPadding={10}>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {todos.map((todo) => (
+            <tr
+              key={todo.id}
+              style={{
+                color: isOverdue(todo.deadline) && !todo.isDone ? "red" : "black",
+              }}
+            >
+              <td>{todo.title}</td>
+              <td>{todo.deadline ? new Date(todo.deadline).toLocaleDateString() : "-"}</td>
+              <td>{todo.isDone ? "Done" : "Pending"}</td>
+              <td>
+                {!todo.isDone && (
+                  <button onClick={() => handleDone(todo.id)}>Done</button>
+                )}
+                <button onClick={() => handleDelete(todo.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
