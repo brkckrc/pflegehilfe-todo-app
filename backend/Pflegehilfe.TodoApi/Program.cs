@@ -1,12 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using Pflegehilfe.TodoApp.Infrastructure.Data;
+using Pflegehilfe.TodoApp.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<TodoDbContext>(options =>
-    options.UseSqlite("Data Source=todo.db"));
+builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
@@ -34,6 +32,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowFrontend");
-//app.UseHttpsRedirection();
+
 app.MapControllers();
 app.Run();

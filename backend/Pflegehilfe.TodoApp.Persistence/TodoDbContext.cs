@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pflegehilfe.TodoApp.Domain.Entities;
 
-namespace Pflegehilfe.TodoApp.Infrastructure.Data;
+namespace Pflegehilfe.TodoApp.Persistence;
 
 public class TodoDbContext : DbContext
 {

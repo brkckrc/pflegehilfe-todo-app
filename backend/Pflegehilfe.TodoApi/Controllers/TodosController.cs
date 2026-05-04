@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pflegehilfe.TodoApi.Dtos;
 using Pflegehilfe.TodoApp.Domain.Entities;
-using Pflegehilfe.TodoApp.Infrastructure.Data;
+using Pflegehilfe.TodoApp.Persistence;
 
 namespace Pflegehilfe.TodoApi.Controllers;
 
@@ -10,7 +10,7 @@ namespace Pflegehilfe.TodoApi.Controllers;
 [Route("api/[controller]")]
 public class TodosController : ControllerBase
 {
-    private readonly TodoDbContext _context;
+    private readonly TodoDbContext _context;   
 
     public TodosController(TodoDbContext context)
     {

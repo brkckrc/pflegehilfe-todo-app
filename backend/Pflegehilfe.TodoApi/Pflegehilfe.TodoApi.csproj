@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pflegehilfe.TodoApp.Domain\Pflegehilfe.TodoApp.Domain.csproj" />
-    <ProjectReference Include="..\Pflegehilfe.TodoApp.Infrastructure\Pflegehilfe.TodoApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\Pflegehilfe.TodoApp.Persistence\Pflegehilfe.TodoApp.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
