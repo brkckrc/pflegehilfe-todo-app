@@ -1,3 +1,14 @@
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+
 * {
   box-sizing: border-box;
 }
@@ -47,9 +58,10 @@ body {
 /* Form */
 .todo-form {
   display: grid;
-  grid-template-columns: 1fr 180px 110px;
+  grid-template-columns: minmax(0, 1fr) 200px 70px;
   gap: 12px;
   margin-bottom: 12px;
+  align-items: start;
 }
 
 .todo-form input {
@@ -60,6 +72,7 @@ body {
   background: #ffffff;
   color: #111827;
   outline: none;
+  height: 44px;
 }
 
 .todo-form input::placeholder {
@@ -79,6 +92,8 @@ body {
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+  height: 44px;
+  align-self: start;
 }
 
 .todo-form button:hover {
@@ -89,11 +104,6 @@ body {
   width: 100%;
 }
 
-.date-input {
-  width: 100%;
-  color: #111827;
-  font-weight: 500;
-}
 
 /* Error */
 .error {
@@ -112,13 +122,18 @@ body {
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   background: white;
+
+  table-layout: fixed;
 }
+
+
 
 .todo-table th,
 .todo-table td {
   padding: 15px 14px;
   text-align: left;
   border-bottom: 1px solid #e5e7eb;
+  word-break: break-word;
 }
 
 .todo-table th {
@@ -207,13 +222,150 @@ body {
   padding: 28px;
 }
 
-/* Responsive */
+
+.date-input {
+  height: 44px;
+  width: 100%;
+  color: #111827;
+  font-weight: 500;
+  color-scheme: light;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  display: block;
+  cursor: pointer;
+  filter: invert(0);
+}
+
+.task-title {
+  max-width: 360px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.char-counter {
+  font-size: 12px;
+  color: #64748b;
+  text-align: right;
+  margin-top: 4px;
+  line-height: 1;
+}
+
+.char-counter.limit {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+
+
 @media (max-width: 700px) {
+
+  .page {
+    padding: 24px 12px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
   .todo-form {
     grid-template-columns: 1fr;
   }
 
+  .todo-form button {
+    width: 100%;
+  }
+
+  .date-input {
+    width: 100%;
+  }
+
+  .task-title {
+    max-width: 160px;
+  }
+
+
+  .todo-table,
+  .todo-table thead,
+  .todo-table tbody,
+  .todo-table th,
+  .todo-table td,
+  .todo-table tr {
+    display: block;
+  }
+
+  .todo-table thead {
+    display: none;
+  }
+
+  .todo-table {
+    border: none;
+    background: transparent;
+  }
+
+  .todo-table tr {
+    margin-bottom: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .todo-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .todo-table td:last-child {
+    border-bottom: none;
+  }
+
+  .todo-table td:nth-child(1)::before {
+    content: "Task";
+    font-weight: 700;
+    color: #64748b;
+  }
+
+  .todo-table td:nth-child(2)::before {
+    content: "Deadline";
+    font-weight: 700;
+    color: #64748b;
+  }
+
+  .todo-table td:nth-child(3)::before {
+    content: "Status";
+    font-weight: 700;
+    color: #64748b;
+  }
+
+  .todo-table td:nth-child(4)::before {
+    content: "Actions";
+    font-weight: 700;
+    color: #64748b;
+  }
+
+  .todo-table td {
+    align-items: center;
+  }
+
+
   .actions {
-    flex-direction: column;
+    justify-content: flex-end;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }

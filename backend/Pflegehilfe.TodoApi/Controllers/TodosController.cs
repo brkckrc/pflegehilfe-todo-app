@@ -47,6 +47,10 @@ public class TodosController : ControllerBase
         {
             return BadRequest("Task must be longer than 10 characters.");
         }
+        if(request.Title.Trim().Length > 200)
+        {
+            return BadRequest("Task must not exceed 200 characters.");
+        }
 
         var todo = new TodoItem
         {
