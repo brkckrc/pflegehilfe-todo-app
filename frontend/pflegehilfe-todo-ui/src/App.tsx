@@ -18,6 +18,12 @@ function App() {
 
   const loadTodos = async () => {
     const res = await fetch(API_URL);
+
+    if (!res.ok) {
+      setError("Error loading tasks");
+      return;
+    }
+
     const data = await res.json();
     setTodos(data);
   };
@@ -51,22 +57,29 @@ function App() {
 
     setTitle("");
     setDeadline("");
-    loadTodos();
+    await loadTodos();
   };
 
   const handleDone = async (id: string) => {
     await fetch(`${API_URL}/${id}/done`, { method: "PUT" });
-    loadTodos();
+    await loadTodos();
   };
 
   const handleDelete = async (id: string) => {
     await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-    loadTodos();
+    await loadTodos();
   };
 
   const isOverdue = (deadline?: string) => {
     if (!deadline) return false;
-    return new Date(deadline) < new Date();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const deadlineDate = new Date(deadline);
+    deadlineDate.setHours(0, 0, 0, 0);
+
+    return deadlineDate < today;
   };
 
   return (
@@ -105,24 +118,43 @@ function App() {
         </thead>
 
         <tbody>
-          {todos.map((todo) => (
-            <tr
-              key={todo.id}
-              style={{
-                color: isOverdue(todo.deadline) && !todo.isDone ? "red" : "black",
-              }}
-            >
-              <td>{todo.title}</td>
-              <td>{todo.deadline ? new Date(todo.deadline).toLocaleDateString() : "-"}</td>
-              <td>{todo.isDone ? "Done" : "Pending"}</td>
-              <td>
-                {!todo.isDone && (
-                  <button onClick={() => handleDone(todo.id)}>Done</button>
-                )}
-                <button onClick={() => handleDelete(todo.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
+          {todos.map((todo) => {
+            const overdue = isOverdue(todo.deadline) && !todo.isDone;
+
+            return (
+              <tr
+                key={todo.id}
+                style={{
+                  color: overdue ? "red" : "black",
+                }}
+              >
+                <td
+                  style={{
+                    textDecoration: todo.isDone ? "line-through" : "none",
+                  }}
+                >
+                  {todo.title}
+                </td>
+                <td>
+                  {todo.deadline
+                    ? new Date(todo.deadline).toLocaleDateString()
+                    : "-"}
+                </td>
+                <td>{todo.isDone ? "Done" : overdue ? "Overdue" : "Pending"}</td>
+                <td>
+                  {!todo.isDone && (
+                    <button
+                      onClick={() => handleDone(todo.id)}
+                      style={{ marginRight: "5px" }}
+                    >
+                      Done
+                    </button>
+                  )}
+                  <button onClick={() => handleDelete(todo.id)}>Delete</button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
