@@ -16,6 +16,16 @@ A full-stack ToDo application built as part of a technical assignment.
 
 ---
 
+## ⚙️ Prerequisites
+
+Make sure the following tools are installed on your system:
+
+- .NET 9 SDK → https://dotnet.microsoft.com/download
+- Node.js (v18+) → https://nodejs.org/
+- npm (comes with Node.js)
+
+---
+
 ## 🚀 Features
 
 - Create tasks (minimum 10 characters validation)
