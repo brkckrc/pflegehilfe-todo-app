@@ -13,3 +13,5 @@ D:\Ek Projeler\Verbund Pflegehilfe\pflegehilfe-todo-app\backend\Pflegehilfe.Todo
 D:\Ek Projeler\Verbund Pflegehilfe\pflegehilfe-todo-app\backend\Pflegehilfe.TodoApp.Infrastructure\obj\Debug\net9.0\refint\Pflegehilfe.TodoApp.Infrastructure.dll
 D:\Ek Projeler\Verbund Pflegehilfe\pflegehilfe-todo-app\backend\Pflegehilfe.TodoApp.Infrastructure\obj\Debug\net9.0\Pflegehilfe.TodoApp.Infrastructure.pdb
 D:\Ek Projeler\Verbund Pflegehilfe\pflegehilfe-todo-app\backend\Pflegehilfe.TodoApp.Infrastructure\obj\Debug\net9.0\ref\Pflegehilfe.TodoApp.Infrastructure.dll
+D:\Ek Projeler\Verbund Pflegehilfe\pflegehilfe-todo-app\backend\Pflegehilfe.TodoApp.Infrastructure\bin\Debug\net9.0\Pflegehilfe.TodoApp.Infrastructure.runtimeconfig.json
+D:\Ek Projeler\Verbund Pflegehilfe\pflegehilfe-todo-app\backend\Pflegehilfe.TodoApp.Infrastructure\obj\Debug\net9.0\Pflegehilfe.TodoApp.Infrastructure.genruntimeconfig.cache

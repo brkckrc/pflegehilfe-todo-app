@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Pflegehilfe.TodoApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+649a6f0d4db58b5e89d708e2bc169ff92761ad80")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+394be1db02e4953580866eba563a12e2079d7476")]
 [assembly: System.Reflection.AssemblyProductAttribute("Pflegehilfe.TodoApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Pflegehilfe.TodoApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
