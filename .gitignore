@@ -20,3 +20,5 @@ Thumbs.db
 
 # Database
 *.db
+*.db-shm
+*.db-wal
