@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\Pflegehilfe.TodoApi.props" />
-</Project>
