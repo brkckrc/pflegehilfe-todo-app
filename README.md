@@ -44,8 +44,9 @@ The application follows a clean structure:
 
 ### Backend
 - Domain → Entities
-- Infrastructure → Database (EF Core, SQLite)
+- Persistence → EF Core (SQLite)
 - API → Controllers
+- Dependency Injection → Configured in Persistence layer
 
 ### Frontend
 - React + TypeScript
